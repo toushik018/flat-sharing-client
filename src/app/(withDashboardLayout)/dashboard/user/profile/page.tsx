@@ -13,11 +13,11 @@ import {
   CardContent,
   CardMedia,
   IconButton,
+  Button,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdateFormModal from "./components/updateFormMadal";
-
 
 const ProfileContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),

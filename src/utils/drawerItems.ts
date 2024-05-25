@@ -8,7 +8,7 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import KeyIcon from "@mui/icons-material/Key";
-
+import IosShareIcon from '@mui/icons-material/IosShare';
 export const drawerItems = (role: TUserRole) => {
     const roleMenus: DrawerItem[] = [];
     const defaultMenus = [
@@ -60,6 +60,11 @@ export const drawerItems = (role: TUserRole) => {
                     title: "My Flats",
                     path: `${role}/my-flats`,
                     icon: ApartmentIcon,
+                },
+                {
+                    title: "My Requests",
+                    path: `${role}/my-requests`,
+                    icon: IosShareIcon,
                 },
             );
             break;

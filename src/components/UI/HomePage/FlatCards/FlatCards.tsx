@@ -1,10 +1,10 @@
-// components/FlatCards.js
+// components/FlatCards.tsx
 import React from "react";
 import { Box, Container, Typography, Grid } from "@mui/material";
-import FCard from "./Card";
+import FCard from "./FCard";
 
 const FlatCards = async () => {
-  const res = await fetch("http://localhost:5000/api//flats?limit=6");
+  const res = await fetch("http://localhost:5000/api/flats?limit=6");
   const flatCards = await res.json();
 
   return (

@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -12,6 +11,8 @@ import Logout from "@mui/icons-material/Logout";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter } from "next/navigation";
 import { logoutUser } from "@/services/actions/logoutUser";
+import Link from "next/link";
+import { getUserInfo } from "@/services/auth.service";
 
 const menuStyles = {
   paper: {
@@ -55,6 +56,9 @@ export default function AccountMenu() {
     setAnchorEl(null);
     logoutUser(router);
   };
+
+  const userInfo = getUserInfo();
+  console.log(userInfo);
 
   return (
     <React.Fragment>
@@ -100,8 +104,14 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar sx={{ background: "transparent", color: "primary.main" }} />
-          Profile
+          <Link href={`/dashboard/${userInfo?.role}/profile`} passHref>
+            <Box display="flex" alignItems="center">
+              <Avatar
+                sx={{ background: "transparent", color: "primary.main" }}
+              />
+              Profile
+            </Box>
+          </Link>
         </MenuItem>
 
         <Divider />

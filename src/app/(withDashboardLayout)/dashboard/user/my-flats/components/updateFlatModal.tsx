@@ -5,12 +5,12 @@ import {
   Box,
   Button,
   Modal,
+  Stack,
   TextField,
   Typography,
-  Stack,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { useUpdateProfileMutation } from "@/redux/api/userApi";
+import { useUpdateFlatMutation } from "@/redux/api/flatApi";
 import { toast } from "sonner";
 
 const style = {
@@ -25,25 +25,38 @@ const style = {
   p: 4,
 };
 
-const UpdateFormModal = ({ open, handleClose, userData }: any) => {
+const UpdateFlatModal = ({ open, handleClose, flatData }: any) => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      username: userData?.username,
-      email: userData?.email,
-      contactNumber: userData?.contactNumber,
-      profilePhoto: userData?.profilePhoto,
+      location: flatData?.location,
+      description: flatData?.description,
+      rentAmount: flatData?.rentAmount,
+      bedrooms: flatData?.bedrooms,
+      amenities: flatData?.amenities,
+      photos: flatData?.photos.join(", "),
     },
   });
-  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+  const [updateFlat, { isLoading }] = useUpdateFlatMutation();
 
   const onSubmit = async (data: any) => {
+    const updatedData = {
+      ...data,
+      rentAmount: Number(data.rentAmount),
+      bedrooms: Number(data.bedrooms),
+      photos: data.photos.split(",").map((photo: any) => photo.trim()),
+    };
     try {
-      const res = await updateProfile(data).unwrap();
-
-      toast.success("Profile updated successfully!");
+      const res = await updateFlat({
+        id: flatData.id,
+        data: updatedData,
+      }).unwrap();
+      console.log(res);
+      if (res?.data.id) {
+        toast.success("Flat updated successfully!");
+      }
       handleClose();
     } catch (error) {
-      toast.error("Failed to update profile.");
+      toast.error("Failed to update flat.");
       console.error("Update error:", error);
     }
   };
@@ -57,53 +70,77 @@ const UpdateFormModal = ({ open, handleClose, userData }: any) => {
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Update Profile
+          Update Flat
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2} mt={2}>
             <Controller
-              name="username"
+              name="location"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Username"
+                  label="Location"
                   variant="outlined"
                   fullWidth
                 />
               )}
             />
             <Controller
-              name="email"
+              name="description"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Email"
+                  label="Description"
                   variant="outlined"
                   fullWidth
                 />
               )}
             />
             <Controller
-              name="contactNumber"
+              name="rentAmount"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Contact Number"
+                  label="Rent Amount"
                   variant="outlined"
                   fullWidth
                 />
               )}
             />
             <Controller
-              name="profilePhoto"
+              name="bedrooms"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Profile Photo, paste the link"
+                  label="Bedrooms"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+            <Controller
+              name="amenities"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Amenities"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+            <Controller
+              name="photos"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Photos (comma-separated)"
                   variant="outlined"
                   fullWidth
                 />
@@ -124,4 +161,4 @@ const UpdateFormModal = ({ open, handleClose, userData }: any) => {
   );
 };
 
-export default UpdateFormModal;
+export default UpdateFlatModal;

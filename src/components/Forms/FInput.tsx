@@ -41,6 +41,9 @@ const FInput: React.FC<TInputProps> = ({
           required={required}
           error={!!error}
           helperText={error ? error.message : ""}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
       )}
     />

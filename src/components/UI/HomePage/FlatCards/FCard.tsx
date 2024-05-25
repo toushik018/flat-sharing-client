@@ -1,3 +1,4 @@
+// components/FCard.tsx
 import React from "react";
 import {
   Card,
@@ -6,7 +7,9 @@ import {
   Typography,
   Box,
   CardActionArea,
+  Button,
 } from "@mui/material";
+import Link from "next/link";
 
 const FCard = ({ flat }: any) => {
   return (
@@ -23,19 +26,15 @@ const FCard = ({ flat }: any) => {
         <CardMedia
           component="img"
           height="200"
-          image={flat.photos[0]} // Assuming photos is an array and taking the first image
+          image={flat.photos[0]}
           alt={flat.location}
           sx={{
             objectFit: "cover",
-            width: "100%", // Set fixed width
-            height: 300, // Set fixed height
+            width: "100%",
+            height: 300,
           }}
         />
-        <CardContent
-          sx={{
-            flexGrow: 1, // Ensures the content grows to fill the remaining space
-          }}
-        >
+        <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {flat.location}
           </Typography>
@@ -49,6 +48,16 @@ const FCard = ({ flat }: any) => {
             <Typography variant="body1" color="text.primary">
               Bedrooms: {flat.bedrooms}
             </Typography>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              href={`/flats/${flat.id}`}
+            >
+              Read and Request
+            </Button>
           </Box>
         </CardContent>
       </CardActionArea>
