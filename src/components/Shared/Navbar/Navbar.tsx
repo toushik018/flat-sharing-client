@@ -47,17 +47,17 @@ const Navbar = () => {
       </Typography>
       <List sx={{ textAlign: "center" }}>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="/">
+          <ListItemButton component={Link} href="/">
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="/about">
+          <ListItemButton component={Link} href="/about">
             <ListItemText primary="About Us" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component="a" href="/my-profile">
+          <ListItemButton component={Link} href="/my-profile">
             <ListItemText primary="My Profile" />
           </ListItemButton>
         </ListItem>
@@ -111,7 +111,7 @@ const Navbar = () => {
           <Box>
             <Typography
               variant="body1"
-              component="a"
+              component={Link}
               href="/"
               sx={{
                 mx: 2,
@@ -124,7 +124,7 @@ const Navbar = () => {
             </Typography>
             <Typography
               variant="body1"
-              component="a"
+              component={Link}
               href="/about"
               sx={{
                 mx: 2,
@@ -138,8 +138,8 @@ const Navbar = () => {
 
             <Typography
               variant="body1"
-              component="a"
-              href="/login"
+              component={Link}
+              href="/my-profile"
               sx={{
                 mx: 2,
                 cursor: "pointer",

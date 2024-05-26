@@ -10,8 +10,38 @@ const requestFlatApi = baseApi.injectEndpoints({
                 data: flatData,
             }),
             invalidatesTags: [tagTypes.flatRequest]
+        }),
+        getFlatRequest: build.query({
+            query: () => {
+                return {
+                    url: "/flat-requests",
+                    method: "GET",
+                }
+            },
+            providesTags: [tagTypes.flatRequest],
+        }),
+        getRequestsOnMyFlats: build.query({
+            query: () => {
+                return {
+                    url: "/flats-with-requests",
+                    method: "GET",
+                }
+            },
+            providesTags: [tagTypes.flatRequest],
+        }),
+        updateRequestStatus: build.mutation({
+            query: ({ requestId, status }) => {
+                console.log('Request ID:', requestId, 'Status:', status);
+                return {
+                    url: "/flat-request/status",
+                    method: "PATCH",
+                    data: { requestId, status },
+                }
+            },
+            invalidatesTags: [tagTypes.flatRequest],
         })
+
     }),
 })
 
-export const {useSubmitFlatRequestMutation } = requestFlatApi
+export const { useSubmitFlatRequestMutation, useGetFlatRequestQuery, useGetRequestsOnMyFlatsQuery, useUpdateRequestStatusMutation } = requestFlatApi

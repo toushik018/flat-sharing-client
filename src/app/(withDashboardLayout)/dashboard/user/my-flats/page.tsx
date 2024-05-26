@@ -4,11 +4,14 @@ import React, { useState } from "react";
 import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
-import { useGetMyFlatsQuery } from "@/redux/api/flatApi";
+import { useDeleteFlatMutation, useGetMyFlatsQuery } from "@/redux/api/flatApi";
 import UpdateFlatModal from "./components/updateFlatModal";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { toast } from "sonner";
 
 const MyFlats = () => {
   const { data, isLoading, error } = useGetMyFlatsQuery("");
+  const [deleteFlat] = useDeleteFlatMutation();
   const [open, setOpen] = useState(false);
   const [selectedFlat, setSelectedFlat] = useState(null);
 
@@ -43,6 +46,18 @@ const MyFlats = () => {
     );
   }
 
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deleteFlat(id).unwrap();
+
+      if (res?.data.id) {
+        toast.warning(res.message);
+      }
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
   const columns: GridColDef[] = [
     { field: "location", headerName: "Location", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
@@ -58,6 +73,12 @@ const MyFlats = () => {
       renderCell: ({ row }) => {
         return (
           <Box>
+            <IconButton
+              onClick={() => handleDelete(row.id)}
+              aria-label="delete"
+            >
+              <DeleteIcon />
+            </IconButton>
             <IconButton aria-label="edit" onClick={() => handleOpen(row)}>
               <EditIcon />
             </IconButton>

@@ -66,6 +66,11 @@ export const drawerItems = (role: TUserRole) => {
                     path: `${role}/my-requests`,
                     icon: IosShareIcon,
                 },
+                {
+                    title: "Requests on My Flats",
+                    path: `${role}/requests-on-my-flats`,
+                    icon: IosShareIcon,
+                },
             );
             break;
 

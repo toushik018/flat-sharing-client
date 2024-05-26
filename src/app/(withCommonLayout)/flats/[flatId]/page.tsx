@@ -19,7 +19,6 @@ const FlatDetailsPage = () => {
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (error) return <div>Error loading flat details</div>;
 
   return (
     <Container sx={{ my: 4 }}>

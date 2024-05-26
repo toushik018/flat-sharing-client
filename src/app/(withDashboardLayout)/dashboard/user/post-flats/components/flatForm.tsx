@@ -9,6 +9,7 @@ import { FieldValues } from "react-hook-form";
 import FForm from "@/components/Forms/FForms";
 import { useCreateFlatMutation } from "@/redux/api/flatApi";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // Updated validation schema to coerce string inputs to numbers
 const flatValidationSchema = z.object({
@@ -36,6 +37,7 @@ const defaultValues = {
 
 const FlatForm = () => {
   const [createFlat, { isLoading }] = useCreateFlatMutation();
+  const router = useRouter();
 
   const handleSubmit = async (values: FieldValues) => {
     try {
@@ -47,6 +49,7 @@ const FlatForm = () => {
       const response = await createFlat(values).unwrap();
       if (response.statusCode === 200) {
         toast.success(response.message);
+        router.push("/dashboard/user/my-flats");
       }
       // Reset form if necessary
     } catch (error) {
@@ -98,7 +101,7 @@ const FlatForm = () => {
                 fullWidth
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <Button
                 type="submit"
