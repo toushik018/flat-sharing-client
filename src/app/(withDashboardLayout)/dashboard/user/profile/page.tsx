@@ -95,7 +95,7 @@ const Profile = () => {
   return (
     <ProfileContainer>
       <ProfileBackground>
-        <ProfileBackgroundImage image="https://source.unsplash.com/random/1600x900?landscape" />
+        <ProfileBackgroundImage image="https://picsum.photos/600/300" />
         <ProfileContent>
           <Typography variant="h3" component="div" gutterBottom>
             {data?.data.username}
