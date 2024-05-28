@@ -44,7 +44,6 @@ const FlatRequestPage = () => {
     useGetMyProfileQuery("");
   const userInfo = getUserInfo();
   const [agreeToTerms, setAgreeToTerms] = useState(false);
-  console.log(profileData);
 
   const handleSubmit = async (values: FieldValues) => {
     if (!agreeToTerms) {
@@ -60,7 +59,7 @@ const FlatRequestPage = () => {
         lengthOfStay: values.lengthOfStay,
       }).unwrap();
       toast.success("Flat share request submitted successfully!");
-      router.push(`/dashboard/${userInfo.role}/profile`);
+      router.push(`/dashboard/${userInfo.role}/my-requests`);
     } catch (error) {
       console.error("Failed to submit flat share request:", error);
       toast.error("Failed to submit flat share request.");

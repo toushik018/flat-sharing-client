@@ -2,9 +2,9 @@
 
 import {
   Box,
-  Button,
   CircularProgress,
   IconButton,
+  Pagination,
   Stack,
   TextField,
 } from "@mui/material";
@@ -12,16 +12,20 @@ import React, { useState } from "react";
 import {
   useDeleteFlatMutation,
   useGetAllFlatsQuery,
+  useUpdateFlatMutation,
 } from "@/redux/api/flatApi";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { toast } from "sonner";
-import Link from "next/link";
 import { useDebounced } from "@/redux/hooks";
+import { IFlat } from "@/types/flat/flat";
+import UpdateFlatModal from "../../user/my-flats/components/updateFlatModal";
 
 const AllFlats = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedFlat, setSelectedFlat] = useState<IFlat | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -30,34 +34,77 @@ const AllFlats = () => {
 
   const query: Record<string, any> = {};
 
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+  query["page"] = page;
+  query["limit"] = limit;
+
   if (!!debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
 
   const { data, isLoading } = useGetAllFlatsQuery({ ...query });
   const [deleteFlat] = useDeleteFlatMutation();
+  const [updateFlat] = useUpdateFlatMutation();
 
   const flats = data?.flats;
   const meta = data?.meta;
 
+  let pageCount: number;
+
+  if (meta?.total) {
+    pageCount = Math.ceil(meta.total / limit);
+  }
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteFlat(id).unwrap();
-
       if (res?.data.id) {
         toast.warning(res.message);
       }
     } catch (err: any) {
+      toast.error("Error while deleting");
       console.error(err.message);
+    }
+  };
+
+  const handleEdit = (flat: IFlat) => {
+    setSelectedFlat(flat);
+    setIsModalOpen(true);
+  };
+
+  const handleUpdate = async (data: Partial<IFlat>) => {
+    if (selectedFlat) {
+      try {
+        const res = await updateFlat({ id: selectedFlat.id, ...data }).unwrap();
+        if (res?.id) {
+          toast.success("Flat updated successfully");
+        }
+        setIsModalOpen(false);
+      } catch (err: any) {
+        toast.error("Error while updating");
+        console.error(err.message);
+      }
     }
   };
 
   const columns: GridColDef[] = [
     { field: "location", headerName: "Location", flex: 1 },
-    { field: "description", headerName: "Description", flex: 1 },
-    { field: "rentAmount", headerName: "Rent Amount", flex: 1 },
-    { field: "bedrooms", headerName: "Bedrooms", flex: 1 },
-    { field: "amenities", headerName: "Amenities", flex: 1 },
+    { field: "description", headerName: "Description", flex: 2 },
+    { field: "rentAmount", headerName: "Rent Amount", flex: 0.5 },
+    { field: "bedrooms", headerName: "Bedrooms", flex: 0.5 },
+    { field: "amenities", headerName: "Amenities", flex: 2 },
+    {
+      field: "username",
+      headerName: "Posted By",
+      flex: 1,
+      valueGetter: (params) => params.row.user.username,
+    },
     {
       field: "action",
       headerName: "Action",
@@ -73,11 +120,9 @@ const AllFlats = () => {
             >
               <DeleteIcon />
             </IconButton>
-            <Link href={`/dashboard/admin/flats/edit/${row.id}`}>
-              <IconButton aria-label="edit">
-                <EditIcon />
-              </IconButton>
-            </Link>
+            <IconButton onClick={() => handleEdit(row)} aria-label="edit">
+              <EditIcon />
+            </IconButton>
           </Box>
         );
       },
@@ -95,7 +140,31 @@ const AllFlats = () => {
       </Stack>
       {!isLoading ? (
         <Box sx={{ height: 600, mt: 2 }}>
-          <DataGrid rows={flats || []} columns={columns} />
+          <DataGrid
+            rows={flats || []}
+            columns={columns}
+            hideFooterPagination
+            slots={{
+              footer: () => {
+                return (
+                  <Box
+                    sx={{
+                      mb: 2,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Pagination
+                      color="primary"
+                      count={pageCount}
+                      page={page}
+                      onChange={handleChange}
+                    />
+                  </Box>
+                );
+              },
+            }}
+          />
         </Box>
       ) : (
         <Box
@@ -106,6 +175,13 @@ const AllFlats = () => {
         >
           <CircularProgress />
         </Box>
+      )}
+      {selectedFlat && (
+        <UpdateFlatModal
+          open={isModalOpen}
+          handleClose={() => setIsModalOpen(false)}
+          flatData={selectedFlat}
+        />
       )}
     </Box>
   );

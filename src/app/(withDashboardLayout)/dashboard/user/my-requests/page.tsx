@@ -7,7 +7,7 @@ import { useGetFlatRequestQuery } from "@/redux/api/requestFlatApi";
 
 const MyRequest = () => {
   const { data, isLoading, error } = useGetFlatRequestQuery("");
-  console.log(data);
+
 
   if (isLoading) {
     return (

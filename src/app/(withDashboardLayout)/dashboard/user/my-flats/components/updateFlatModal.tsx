@@ -50,7 +50,7 @@ const UpdateFlatModal = ({ open, handleClose, flatData }: any) => {
         id: flatData.id,
         data: updatedData,
       }).unwrap();
-      console.log(res);
+
       if (res?.data.id) {
         toast.success("Flat updated successfully!");
       }
