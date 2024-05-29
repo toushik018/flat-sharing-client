@@ -37,13 +37,15 @@ export interface IRequest {
   };
 }
 
-// interface Flat {
-//   id: string;
-//   location: string;
-//   description: string;
-//   rentAmount: number;
-//   bedrooms: number;
-//   amenities: string[];
-//   photos: string[];
-//   requests: Request[];
-// }
+
+
+export interface FlatCardsClientProps {
+  initialFlats: IFlat[];
+}
+
+export interface SearchParams {
+  location?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  bedrooms?: number;
+}

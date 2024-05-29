@@ -1,26 +1,29 @@
 // components/FlatCards.tsx
 import React from "react";
 import { Box, Container, Typography, Grid } from "@mui/material";
-import FCard from "./FCard";
+import SearchOptions from "../SearchFlats/SearchFlats";
+import FlatCardsClient from "./FlatCardsClient";
+
+const fetchInitialFlats = async () => {
+  const res = await fetch("http://localhost:5000/api/flats?limit=6");
+  if (!res.ok) {
+    throw new Error("Failed to fetch flats");
+  }
+  return res.json();
+};
 
 const FlatCards = async () => {
-  const res = await fetch("http://localhost:5000/api/flats?limit=6");
-  const flatCards = await res.json();
+  const initialFlats = await fetchInitialFlats();
 
   return (
     <Container sx={{ my: 4 }}>
+      {/* <SearchOptions /> */}
       <Box sx={{ textAlign: "center", mb: 4 }}>
         <Typography variant="h4" component="h2">
           Available Flats
         </Typography>
       </Box>
-      <Grid container spacing={4}>
-        {flatCards?.data?.map((flat: any) => (
-          <Grid item xs={12} sm={6} md={4} key={flat.id}>
-            <FCard flat={flat} />
-          </Grid>
-        ))}
-      </Grid>
+      <FlatCardsClient initialFlats={initialFlats.data} />
     </Container>
   );
 };

@@ -1,43 +1,73 @@
-// components/SearchOptions.js
-import React from "react";
-import {
-  Box,
-  Container,
-  TextField,
-  Button,
-  Grid,
-  Typography,
-} from "@mui/material";
+"use client";
 
-const SearchOptions = () => {
+import React from "react";
+import { Box, Button, Grid, TextField } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import { SearchParams } from "@/types/flat/flat";
+
+interface SearchOptionsProps {
+  onSearch: (params: SearchParams) => void;
+}
+
+const SearchOptions = ({ onSearch }: any) => {
+  const { control, handleSubmit } = useForm<SearchParams>();
+
+  const onSubmit = (data: SearchParams) => {
+    // Filter out empty fields
+    const filters = Object.fromEntries(
+      Object.entries(data).filter(([_, value]) => value)
+    );
+    onSearch(filters);
+  };
+
   return (
-    <Container sx={{ my: 4 }}>
-      <Typography variant="h4" component="h2" gutterBottom>
-        Find Flats
-      </Typography>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12} sm={3}>
-          <TextField label="Location" variant="outlined" fullWidth />
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mb: 4 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={3}>
+          <Controller
+            name="location"
+            control={control}
+            render={({ field }) => (
+              <TextField {...field} label="Location" fullWidth />
+            )}
+          />
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <TextField label="Price Range" variant="outlined" fullWidth />
+        <Grid item xs={12} sm={6} md={3}>
+          <Controller
+            name="minPrice"
+            control={control}
+            render={({ field }) => (
+              <TextField {...field} label="Min Price" type="number" fullWidth />
+            )}
+          />
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <TextField label="Number of Bedrooms" variant="outlined" fullWidth />
+        <Grid item xs={12} sm={6} md={3}>
+          <Controller
+            name="maxPrice"
+            control={control}
+            render={({ field }) => (
+              <TextField {...field} label="Max Price" type="number" fullWidth />
+            )}
+          />
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ height: 55 }}
-            component="h1"
-          >
-            Search
-          </Button>
+        <Grid item xs={12} sm={6} md={3}>
+          <Controller
+            name="bedrooms"
+            control={control}
+            render={({ field }) => (
+              <TextField {...field} label="Bedrooms" type="number" fullWidth />
+            )}
+          />
         </Grid>
       </Grid>
-    </Container>
+      <Grid item xs={12} sm={6} md={3}>
+        <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
+          <Button type="submit" variant="contained">
+            Search
+          </Button>
+        </Box>
+      </Grid>
+    </Box>
   );
 };
 

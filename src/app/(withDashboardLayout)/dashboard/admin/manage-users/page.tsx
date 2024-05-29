@@ -180,7 +180,7 @@ const ManageUsers = () => {
         />
       </Stack>
       <Box sx={{ height: 600 }}>
-        <DataGrid rows={users} columns={columns} />
+        <DataGrid rows={users} columns={columns} hideFooter/>
       </Box>
     </Box>
   );

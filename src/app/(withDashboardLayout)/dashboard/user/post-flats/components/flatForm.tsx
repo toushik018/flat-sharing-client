@@ -59,7 +59,7 @@ const FlatForm = () => {
 
   return (
     <Container>
-      <Box sx={{ my: 4 }}>
+      <Box sx={{ my: 4, backgroundColor: "white", py: 4, px: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Flat Share Post Information
         </Typography>

@@ -150,9 +150,6 @@ const Navbar = () => {
               My Profile
             </Typography>
             <AuthButton />
-            <Button component={Link} href="/register">
-              Register
-            </Button>
           </Box>
         )}
       </Stack>
