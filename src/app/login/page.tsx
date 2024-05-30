@@ -5,8 +5,6 @@ import Link from "next/link";
 import { FieldValues } from "react-hook-form";
 import { userLogin } from "@/services/actions/userLogin";
 import { toast } from "sonner";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { storeUserInfo } from "@/services/auth.service";
 
@@ -14,12 +12,12 @@ import FInput from "@/components/Forms/FInput";
 import FForm from "@/components/Forms/FForms";
 import { useRouter } from "next/navigation";
 
-export const validationSchema = z.object({
-  email: z.string().email("Please enter a valid email address!"),
-  password: z.string().min(6, "Must be at least 6 characters"),
-});
+// const validationSchema = z.object({
+//   email: z.string().email("Please enter a valid email address!"),
+//   password: z.string().min(6, "Must be at least 6 characters"),
+// });
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const router = useRouter();
   const [message, setMessage] = useState<{
     text: string;
@@ -97,7 +95,7 @@ const LoginPage = () => {
           <Box>
             <FForm
               onSubmit={handleLogin}
-              resolver={zodResolver(validationSchema)}
+              // resolver={zodResolver(validationSchema)}
               defaultValues={{
                 email: "",
                 password: "",

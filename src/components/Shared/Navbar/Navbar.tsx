@@ -1,7 +1,7 @@
 "use client";
 
 // components/Navbar.js
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   Container,
@@ -20,11 +20,22 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { getUserInfo } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const user = getUserInfo();
+  const router = useRouter();
+
+  const handleProfileClick = (event: { preventDefault: () => void }) => {
+    if (!user) {
+      event.preventDefault();
+      router.push("/login");
+    }
+  };
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -139,7 +150,8 @@ const Navbar = () => {
             <Typography
               variant="body1"
               component={Link}
-              href="/my-profile"
+              href={`/dashboard/${user?.role}/profile`}
+              onClick={handleProfileClick}
               sx={{
                 mx: 2,
                 cursor: "pointer",

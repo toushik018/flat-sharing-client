@@ -10,6 +10,7 @@ import {
   Button,
 } from "@mui/material";
 import Link from "next/link";
+import Image from "next/image";
 
 const FCard = ({ flat }: any) => {
   return (
@@ -23,7 +24,7 @@ const FCard = ({ flat }: any) => {
       }}
     >
       <CardActionArea>
-        <CardMedia
+        {/* <CardMedia
           component="img"
           height="200"
           image={flat.photos[0]}
@@ -33,7 +34,16 @@ const FCard = ({ flat }: any) => {
             width: "100%",
             height: 300,
           }}
-        />
+        /> */}
+        <Box sx={{ position: "relative", width: "100%", height: "200px" }}>
+          <Image
+            alt={flat.location}
+            src={flat.photos[0]}
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+          />
+        </Box>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {flat.location}

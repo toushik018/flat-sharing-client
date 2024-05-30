@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { getNewAccessToken, removeUser } from '@/services/auth.service';
 import { getFromLocalStorage, setToLocalStorage } from '@/utils/local-storage';
 import { authKey } from '@/constants/authKey';
+import setAccessToken from '@/services/actions/setAccessToken';
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
     sent?: boolean;
@@ -40,11 +41,14 @@ instance.interceptors.response.use(
             try {
                 const response = await getNewAccessToken();
                 const accessToken = response?.data?.accessToken;
+                console.log(accessToken);
                 if (accessToken) {
                     config.headers = config.headers || {};
                     config.headers['Authorization'] = `Bearer ${accessToken}`;
                     setToLocalStorage(authKey, accessToken);
-                    return instance(config); 
+                    setAccessToken(accessToken)
+
+                    return instance(config);
                 }
             } catch (refreshError) {
                 removeUser();

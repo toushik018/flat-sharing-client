@@ -1,5 +1,3 @@
-
-
 // services/actions/userLogin.ts
 "use server";
 
@@ -12,9 +10,10 @@ export const userLogin = async (data: FieldValues) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-    cache: "no-store",
+    credentials: "include",
   });
 
   const userInfo = await res.json();
+  console.log(userInfo);
   return userInfo;
 };

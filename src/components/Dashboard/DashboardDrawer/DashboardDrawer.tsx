@@ -25,7 +25,6 @@ export default function DashboardDrawer({
   const [isClosing, setIsClosing] = React.useState(false);
 
   const { data, isLoading } = useGetMyProfileQuery({});
-  console.log(data);
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -87,7 +86,7 @@ export default function DashboardDrawer({
               color="primary.main"
             >
               Hi {isLoading ? "Loading" : data?.data.username}, Welcome to Flat
-              sharing platform! {data?.data.role}
+              sharing platform
             </Typography>
             <Stack direction="row" gap={3}>
               <Badge badgeContent={1} color="primary">

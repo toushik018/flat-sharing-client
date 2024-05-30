@@ -1,4 +1,4 @@
-// components/Tips.js
+
 import React from "react";
 import {
   Container,
@@ -33,7 +33,13 @@ const tips = [
 const Tips = () => {
   return (
     <Container
-      sx={{ my: 4, backgroundColor: "#8DC4FA", borderRadius: 2, p: 4 }}
+      sx={{
+        my: 4,
+        backgroundColor: "#8DC4FA",
+        borderRadius: 2,
+        p: 4,
+        height: "50vh",
+      }}
     >
       <Box sx={{ textAlign: "center", mb: 4 }}>
         <Typography variant="h4" component="h2" sx={{ color: "#333" }}>
@@ -43,7 +49,7 @@ const Tips = () => {
       <Grid container spacing={4}>
         {tips.map((tip) => (
           <Grid item xs={12} sm={4} key={tip.id}>
-            <Card sx={{  borderRadius: 2 }}>
+            <Card sx={{ borderRadius: 2 }}>
               <CardContent>
                 <Typography
                   variant="h5"

@@ -21,7 +21,6 @@ import {
   useDeleteUserMutation,
 } from "@/redux/api/userApi";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { toast } from "sonner";
 import { useDebounced } from "@/redux/hooks";
 

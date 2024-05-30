@@ -12,21 +12,21 @@ import { storeUserInfo } from "@/services/auth.service";
 import FInput from "@/components/Forms/FInput";
 import FForm from "@/components/Forms/FForms";
 
-export const userValidationSchema = z
-  .object({
-    username: z.string().min(1, "Please enter your username!"),
-    email: z.string().email("Please enter a valid email address!"),
-    password: z.string().min(6, "Must be at least 6 characters"),
-    confirmPassword: z.string().min(6, "Must be at least 6 characters"),
-    profilePhoto: z.string().url("Please enter a valid URL!").optional(),
-    contactNumber: z
-      .string()
-      .regex(/^\d{11}$/, "Please enter a valid contact number"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+// export const userValidationSchema = z
+//   .object({
+//     username: z.string().min(1, "Please enter your username!"),
+//     email: z.string().email("Please enter a valid email address!"),
+//     password: z.string().min(6, "Must be at least 6 characters"),
+//     confirmPassword: z.string().min(6, "Must be at least 6 characters"),
+//     profilePhoto: z.string().url("Please enter a valid URL!").optional(),
+//     contactNumber: z
+//       .string()
+//       .regex(/^\d{11}$/, "Please enter a valid contact number"),
+//   })
+//   .refine((data) => data.password === data.confirmPassword, {
+//     message: "Passwords do not match",
+//     path: ["confirmPassword"],
+//   });
 
 const defaultValues = {
   username: "",
@@ -42,7 +42,7 @@ const RegisterUserPage = () => {
 
   const handleRegister = async (values: FieldValues) => {
     try {
-      const { confirmPassword, ...rest } = values; // Remove confirmPassword from values
+      const { confirmPassword, ...rest } = values;
       const res = await registerUser(rest);
       if (res?.data.id) {
         toast.success("User registered successfully!");
@@ -100,7 +100,7 @@ const RegisterUserPage = () => {
           <Box>
             <FForm
               onSubmit={handleRegister}
-              resolver={zodResolver(userValidationSchema)}
+              // resolver={zodResolver(userValidationSchema)}
               defaultValues={defaultValues}
             >
               <Grid container spacing={2} my={1}>

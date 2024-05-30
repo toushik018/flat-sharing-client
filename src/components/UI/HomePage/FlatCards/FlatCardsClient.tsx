@@ -28,13 +28,10 @@ const FlatCardsClient = ({ initialFlats = [] }) => {
         page: String(page),
       });
 
-
       const res = await fetch(
-        `http://localhost:5000/api/flats?${query.toString()}`
+        `https://flat-sharing-backend-beta.vercel.app/api/flats?${query.toString()}`
       );
       const data = await res.json();
-
-      
 
       if (page === 1) {
         setFlats(data.data);
@@ -74,7 +71,7 @@ const FlatCardsClient = ({ initialFlats = [] }) => {
 
   const handleSearch = (params: SearchParams) => {
     setSearchParams(params);
-    setPage(1); 
+    setPage(1);
   };
 
   return (

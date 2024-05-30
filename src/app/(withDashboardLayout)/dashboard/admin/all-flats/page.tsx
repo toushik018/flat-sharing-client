@@ -41,7 +41,7 @@ const AllFlats = () => {
   query["limit"] = limit;
 
   if (!!debouncedTerm) {
-    query["searchTerm"] = debouncedTerm;
+    query["location"] = debouncedTerm;
   }
 
   const { data, isLoading } = useGetAllFlatsQuery({ ...query });
