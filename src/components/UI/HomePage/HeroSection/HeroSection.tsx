@@ -46,21 +46,16 @@ const HeroSection = () => {
           >
             Find Your Perfect Flat Mate Today!
           </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
+          <Typography
             sx={{
               mt: 2,
-              backdropFilter: "blur(5px)",
+              p: 2,
               backgroundColor: "rgba(76, 175, 80, 0.7)",
-              border: "1px solid rgba(76, 175, 80, 0.2)",
-              borderRadius: "50px",
+              color: "white",
             }}
-            size="large"
-            href="/post-flat"
           >
-            Share Your Flat
-          </Button>
+            Share Your Flat Now
+          </Typography>
         </motion.div>
       </ImagesSlider>
     </Box>
