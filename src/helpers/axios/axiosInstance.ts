@@ -33,24 +33,25 @@ instance.interceptors.response.use(
     function (response) {
         return response;
     },
-    async function (error: AxiosError) {
+    async (error: AxiosError) => {
         const config = error.config as CustomAxiosRequestConfig;
+        console.error('Axios error:', error);
 
-        if (error?.response?.status === 401 && !config.sent) {
+        if (error.response?.status === 401 && !config.sent) {
             config.sent = true;
             try {
                 const response = await getNewAccessToken();
-                const accessToken = response?.data?.accessToken;
-                console.log(accessToken);
+                const accessToken = response?.data?.data?.accessToken;
+
                 if (accessToken) {
                     config.headers = config.headers || {};
                     config.headers['Authorization'] = `Bearer ${accessToken}`;
                     setToLocalStorage(authKey, accessToken);
-                    setAccessToken(accessToken)
-
+                    setAccessToken(accessToken);
                     return instance(config);
                 }
             } catch (refreshError) {
+                console.error('Token refresh error:', refreshError);
                 removeUser();
                 return Promise.reject(refreshError);
             }

@@ -9,7 +9,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Avatar, Badge, Stack } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import SideBar from "../Sidebar/Sidebar";
 import { useGetMyProfileQuery } from "@/redux/api/userApi";
@@ -85,16 +84,14 @@ export default function DashboardDrawer({
               component="div"
               color="primary.main"
             >
-              Hi {isLoading ? "Loading" : data?.data.username}, Welcome to Flat
+              Hi {isLoading ? "Loading" : data?.data?.username}, Welcome to Flat
               sharing platform
             </Typography>
-            <Stack direction="row" gap={3}>
-              <Badge badgeContent={1} color="primary">
-                <IconButton sx={{ background: "#ffffff" }}>
-                  <NotificationsIcon color="action" />
-                </IconButton>
-              </Badge>
-              <Avatar alt={data?.data.username} src={data?.data.profilePhoto} />
+            <Stack direction="row" gap={1}>
+              <Avatar
+                alt={data?.data.username}
+                src={data?.data?.profilePhoto}
+              />
               <AccountMenu />
             </Stack>
           </Box>

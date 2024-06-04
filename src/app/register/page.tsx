@@ -4,29 +4,13 @@ import Link from "next/link";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "@/services/actions/registerUser";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.service";
 import FInput from "@/components/Forms/FInput";
 import FForm from "@/components/Forms/FForms";
-
-// export const userValidationSchema = z
-//   .object({
-//     username: z.string().min(1, "Please enter your username!"),
-//     email: z.string().email("Please enter a valid email address!"),
-//     password: z.string().min(6, "Must be at least 6 characters"),
-//     confirmPassword: z.string().min(6, "Must be at least 6 characters"),
-//     profilePhoto: z.string().url("Please enter a valid URL!").optional(),
-//     contactNumber: z
-//       .string()
-//       .regex(/^\d{11}$/, "Please enter a valid contact number"),
-//   })
-//   .refine((data) => data.password === data.confirmPassword, {
-//     message: "Passwords do not match",
-//     path: ["confirmPassword"],
-//   });
+import { userValidationSchema } from "@/types/validationSchemas/validationSchemas";
 
 const defaultValues = {
   username: "",
@@ -44,7 +28,7 @@ const RegisterUserPage = () => {
     try {
       const { confirmPassword, ...rest } = values;
       const res = await registerUser(rest);
-      if (res?.data.id) {
+      if (res?.data?.id) {
         toast.success("User registered successfully!");
         const result = await userLogin({
           email: values.email,
@@ -56,7 +40,21 @@ const RegisterUserPage = () => {
         }
       } else {
         const errorMessage = res.message || "Registration failed!";
-        toast.error(errorMessage);
+        // Check for unique constraint error message
+        if (res.message && res.message.includes("Unique constraint failed")) {
+          const match = res.message.match(
+            /Unique constraint failed on the fields: \(([^)]+)\)/
+          );
+          if (match && match[1]) {
+            toast.error(
+              `Registration failed! The ${match[1]} is already in use.`
+            );
+          } else {
+            toast.error(errorMessage);
+          }
+        } else {
+          toast.error(errorMessage);
+        }
         console.log("Error:", res);
       }
     } catch (err: any) {
@@ -100,7 +98,7 @@ const RegisterUserPage = () => {
           <Box>
             <FForm
               onSubmit={handleRegister}
-              // resolver={zodResolver(userValidationSchema)}
+              resolver={zodResolver(userValidationSchema)}
               defaultValues={defaultValues}
             >
               <Grid container spacing={2} my={1}>

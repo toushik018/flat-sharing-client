@@ -7,18 +7,14 @@ import { userLogin } from "@/services/actions/userLogin";
 import { toast } from "sonner";
 import { useState } from "react";
 import { storeUserInfo } from "@/services/auth.service";
-
+import { zodResolver } from "@hookform/resolvers/zod";
 import FInput from "@/components/Forms/FInput";
 import FForm from "@/components/Forms/FForms";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import { validationSchema } from "@/types/validationSchemas/validationSchemas";
 
-// const validationSchema = z.object({
-//   email: z.string().email("Please enter a valid email address!"),
-//   password: z.string().min(6, "Must be at least 6 characters"),
-// });
-
-const LoginPage: React.FC = () => {
-  const router = useRouter();
+const LoginPage = () => {
+  // const router = useRouter();
   const [message, setMessage] = useState<{
     text: string;
     type: "error" | "success";
@@ -31,7 +27,7 @@ const LoginPage: React.FC = () => {
         setMessage({ text: res.message, type: "success" });
         toast.success(res.message);
         storeUserInfo({ accessToken: res.data.token });
-        router.push("/dashboard");
+        // router.push("/dashboard");
       } else {
         setMessage({ text: res.message, type: "error" });
       }
@@ -95,7 +91,7 @@ const LoginPage: React.FC = () => {
           <Box>
             <FForm
               onSubmit={handleLogin}
-              // resolver={zodResolver(validationSchema)}
+              resolver={zodResolver(validationSchema)}
               defaultValues={{
                 email: "",
                 password: "",
@@ -121,7 +117,7 @@ const LoginPage: React.FC = () => {
               </Grid>
 
               <Typography mb={1} textAlign="end" component="p" fontWeight={300}>
-                Forgot Password?
+                <Link href="/forget-password">Forgot Password?</Link>
               </Typography>
 
               <Button

@@ -74,6 +74,7 @@ const ProfileContent = styled(CardContent)(({ theme }) => ({
 
 const Profile = () => {
   const { data, isLoading } = useGetMyProfileQuery("");
+  console.log(data);
   const [open, setOpen] = useState(false);
 
   if (isLoading) {

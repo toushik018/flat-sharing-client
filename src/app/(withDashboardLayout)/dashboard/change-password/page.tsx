@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useChangePasswordMutation } from "@/redux/api/authApi";
 import { logoutUser } from "@/services/actions/logoutUser";
+import Link from "next/link";
 
 const validationSchema = z
   .object({
@@ -102,7 +103,9 @@ const ChangePassword = () => {
             />
           </Grid>
         </Grid>
-
+        <Typography mb={1} textAlign="end" component="p" fontWeight={300}>
+          <Link href="/forget-password">Forgot Password?</Link>
+        </Typography>
         <Button type="submit" sx={{ width: "100%", my: 2 }}>
           Change Password
         </Button>

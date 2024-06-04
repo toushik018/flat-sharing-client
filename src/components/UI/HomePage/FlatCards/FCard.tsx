@@ -3,7 +3,6 @@ import React from "react";
 import {
   Card,
   CardContent,
-  CardMedia,
   Typography,
   Box,
   CardActionArea,
@@ -24,17 +23,6 @@ const FCard = ({ flat }: any) => {
       }}
     >
       <CardActionArea>
-        {/* <CardMedia
-          component="img"
-          height="200"
-          image={flat.photos[0]}
-          alt={flat.location}
-          sx={{
-            objectFit: "cover",
-            width: "100%",
-            height: 300,
-          }}
-        /> */}
         <Box sx={{ position: "relative", width: "100%", height: "200px" }}>
           <Image
             alt={flat.location}

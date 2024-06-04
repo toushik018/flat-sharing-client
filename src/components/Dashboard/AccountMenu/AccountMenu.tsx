@@ -58,7 +58,7 @@ export default function AccountMenu() {
   };
 
   const userInfo = getUserInfo();
-  console.log(userInfo);
+  
 
   return (
     <React.Fragment>
@@ -69,7 +69,7 @@ export default function AccountMenu() {
             tooltip: {
               sx: {
                 bgcolor: "#cdd1da5c",
-                color: "primary.main", // Change text color if necessary
+                color: "primary.main", 
               },
             },
           }}

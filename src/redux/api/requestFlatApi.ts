@@ -31,7 +31,6 @@ const requestFlatApi = baseApi.injectEndpoints({
         }),
         updateRequestStatus: build.mutation({
             query: ({ requestId, status }) => {
-                console.log('Request ID:', requestId, 'Status:', status);
                 return {
                     url: "/flat-request/status",
                     method: "PATCH",

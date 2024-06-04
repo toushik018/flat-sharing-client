@@ -47,7 +47,6 @@ export const getNewAccessToken = async () => {
     return response;
   } catch (error) {
     console.error("Failed to refresh token", error);
-    removeUser(); // Log out the user if the refresh token request fails
     throw error;
   }
 };

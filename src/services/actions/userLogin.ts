@@ -1,7 +1,8 @@
-// services/actions/userLogin.ts
-"use server";
 
 import { FieldValues } from "react-hook-form";
+import setAccessToken from "./setAccessToken";
+
+
 
 export const userLogin = async (data: FieldValues) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/login`, {
@@ -14,6 +15,11 @@ export const userLogin = async (data: FieldValues) => {
   });
 
   const userInfo = await res.json();
-  console.log(userInfo);
+
+  if (userInfo.data && userInfo.data.token) {
+    setAccessToken(userInfo.data.token, { redirect: true });
+  } else {
+    console.error("Login failed:", userInfo);
+  }
   return userInfo;
 };

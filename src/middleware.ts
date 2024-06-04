@@ -1,27 +1,27 @@
+// import jwtDecode from 'jwt-decode';
 import { jwtDecode } from 'jwt-decode';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-
 type Role = keyof typeof roleBasedPrivateRoutes;
 
-const AuthRoutes = ['/login', '/register'];
+const AuthRoutes = ["/login", "/register"];
 const commonPrivateRoutes = [
-    '/dashboard',
-    '/dashboard/change-password'
+    "/dashboard",
+    "/dashboard/change-password",
+    "/dashboard/edit-profile",
 ];
 const roleBasedPrivateRoutes = {
     USER: [/^\/dashboard\/user/],
     ADMIN: [/^\/dashboard\/admin/],
 };
-
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    const accessToken = request.cookies.get('accessToken')?.value;
 
-    console.log({ pathname, accessToken });
+    const accessToken = cookies().get('accessToken')?.value;
+    // const accessToken = request.cookies.get('accessToken');
 
     if (!accessToken) {
         if (AuthRoutes.includes(pathname)) {

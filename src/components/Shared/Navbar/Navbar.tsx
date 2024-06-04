@@ -72,12 +72,7 @@ const Navbar = () => {
             <ListItemText primary="My Profile" />
           </ListItemButton>
         </ListItem>
-        <ListItem sx={{ mt: 20 }}>
-          <AuthButton />
-          <Button component={Link} href="/register">
-            Register
-          </Button>
-        </ListItem>
+        <AuthButton />
       </List>
     </Box>
   );

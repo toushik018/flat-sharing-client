@@ -21,7 +21,7 @@ const userApi = baseApi.injectEndpoints({
                     meta,
                 };
             },
-            providesTags: [tagTypes.flat],
+            providesTags: [tagTypes.user],
         }),
         getMyProfile: build.query({
             query: () => ({

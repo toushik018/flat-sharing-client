@@ -28,15 +28,12 @@ const FlatCardsClient = ({ initialFlats = [] }) => {
         page: String(page),
       });
 
-      const res = await fetch(
-        `https://flat-sharing-backend-beta.vercel.app/api/flats?${query.toString()}`
-      );
+      const res = await fetch(`http://localhost:5000/api/flats?${query}`);
       const data = await res.json();
 
       if (page === 1) {
         setFlats(data.data);
       } else {
-        // Deduplicate flats
         setFlats((prevFlats) => {
           const flatIds = new Set(prevFlats.map((flat) => flat.id));
           const newFlats = data.data.filter(
