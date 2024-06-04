@@ -39,11 +39,12 @@ export const removeUser = () => {
 export const getNewAccessToken = async () => {
   try {
     const response = await axiosInstance({
-      url: 'http://localhost:5000/api/refresh-token',
+      url: 'https://flat-sharing-backend-beta.vercel.app/api/refresh-token',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     });
+    console.log("New access token response:", response);
     return response;
   } catch (error) {
     console.error("Failed to refresh token", error);

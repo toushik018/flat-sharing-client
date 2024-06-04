@@ -4,7 +4,9 @@ import { Box, Container, Typography, Grid } from "@mui/material";
 import FlatCardsClient from "./FlatCardsClient";
 
 const fetchInitialFlats = async () => {
-  const res = await fetch("http://localhost:5000/api/flats?limit=6");
+  const res = await fetch(
+    "https://flat-sharing-backend-beta.vercel.app/api/flats?limit=6"
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch flats");
   }
