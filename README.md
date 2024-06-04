@@ -30,7 +30,7 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/flat-sharing-client.git
+git clone https://github.com/toushik018/flat-sharing-client
 ```
 
 2. Navigate into the project directory:
@@ -61,10 +61,3 @@ Before running the application, ensure you set up the necessary environment vari
 
 Contributions are welcome! Please fork the repository and create a pull request with your proposed changes.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to customize it further based on your specific project details and requirements!
